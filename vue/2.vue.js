@@ -2,7 +2,7 @@
  * @author: xiejiaxin
  * @Date: 2021-10-13 17:13:07
  * @LastEditors: xiejiaxin
- * @LastEditTime: 2021-10-17 21:10:21
+ * @LastEditTime: 2021-10-17 21:27:39
  * @description: file content
  */
 
@@ -18,4 +18,4 @@
 // get方法里面，会实例化Dep，并且生成对应watcher，进行依赖添加，等set的时候，我们的dep就可以进行逐一通知了
 
 //! diff算法
-// 
+//
