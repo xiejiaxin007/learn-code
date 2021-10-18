@@ -2,7 +2,7 @@
  * @author: xiejiaxin
  * @Date: 2021-10-15 16:45:57
  * @LastEditors: xiejiaxin
- * @LastEditTime: 2021-10-18 09:42:19
+ * @LastEditTime: 2021-10-18 10:44:27
  * @description: file content
  */
 // 工厂模式：将实例化动作放到入口函数内部，可以隐藏内部实现，比如vue中的虚拟dom，就是根据不同的参数返回不同的dom结构的
@@ -104,6 +104,7 @@ function bus() {
             dep.notify();
         }
     });
+    
     console.log(obj.a, obj.b);
     obj.a = '3';
     obj.b = '33';
