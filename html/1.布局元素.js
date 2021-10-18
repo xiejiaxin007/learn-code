@@ -28,3 +28,10 @@
 // -- 加载速度优化
 
 // meta：charset--决定当前html的字符编码；htto-equiv（可以做一些http代理）、name（表示元数据）、content
+
+
+
+
+
+// rem解读：https://yanhaijing.com/css/2017/09/29/principle-of-rem-layout/
+// -- 其实就是把屏幕分成固定份数，每一份占多少，其实就算html根节点的字体大小，这时我们渲染的dom大小就应该是一个占据份数*根节点字体大小，也就是*rem

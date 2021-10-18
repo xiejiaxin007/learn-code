@@ -2,7 +2,7 @@
  * @author: xiejiaxin
  * @Date: 2021-10-16 16:45:25
  * @LastEditors: xiejiaxin
- * @LastEditTime: 2021-10-17 15:26:07
+ * @LastEditTime: 2021-10-18 15:07:29
  * @description: file content
  */
 // https://leetcode-cn.com/problems/longest-substring-without-repeating-characters/
@@ -16,6 +16,7 @@
  * @param {string} s
  * @return {number}
  */
+// 想法歪了写的，是错误的
 var lengthOfLongestSubstring_false = function (s) {
     let len = 0;
     const num = s.length;
@@ -69,7 +70,7 @@ var lengthOfLongestSubstring_normal = function (s) {
     return res;
 };
 
-var lengthOfLongestSubstring = function (s) {
+var lengthOfLongestSubstring_good = function (s) {
     let len = s.length;
     let result = 0;
 
@@ -93,24 +94,40 @@ var lengthOfLongestSubstring = function (s) {
     }
     return result;
 }
-
-var lengthOfLongestSubstring_test = function (s) {
+// 双指针，滑动解法
+var lengthOfLongestSubstring = function (s) {
     const len = s.length;
     if (len <= 1) {
         return len;
     }
-    let left, right = 0;
+    let left = 0, right = 0;
     let set = new Set();
     let maxLen = 0;
+    let res = 0;
     while(right < len) {
+        // 如果right值已经存在，左指针向右移动
         if (set.has(s[right])) {
-            left++;
-        } else {
-            right++;
+            while(left < right - 1) {
+                if (set.has(s[left])) {
+                    set.delete(s[left]);
+                    left++;
+                    maxLen--;
+                } else { 
+                    break;
+                }
+            }
             set.add(s[right]);
+            right++;
+        } else {
+            // 如果当前没有right
+            set.add(s[right]);
+            right++;
             maxLen++;
         }
+        console.log(set)
+        res = Math.max(res, maxLen);
     }
-    return maxLen;
+    return res;
 }
-console.log(lengthOfLongestSubstring('anaa'));
+// pwwkew/abcabcbb/aab/dvdf
+console.log(lengthOfLongestSubstring('dvdf'));
