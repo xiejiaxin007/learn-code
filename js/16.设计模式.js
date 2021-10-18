@@ -2,7 +2,7 @@
  * @author: xiejiaxin
  * @Date: 2021-10-15 16:45:57
  * @LastEditors: xiejiaxin
- * @LastEditTime: 2021-10-15 18:16:02
+ * @LastEditTime: 2021-10-18 09:42:19
  * @description: file content
  */
 // 工厂模式：将实例化动作放到入口函数内部，可以隐藏内部实现，比如vue中的虚拟dom，就是根据不同的参数返回不同的dom结构的
@@ -48,7 +48,7 @@ function test () {
 
 // 观察者模式：订阅发布模式，比如vue的事件绑定机制、响应式绑定等
 function bus() {
-    // 观察者
+    // 观察者e
     class Watcher {
         constructor(cb) {
             this.id = new Date().getTime();
