@@ -2,7 +2,7 @@
  * @author: xiejiaxin
  * @Date: 2021-10-13 10:08:14
  * @LastEditors: xiejiaxin
- * @LastEditTime: 2021-10-13 11:51:04
+ * @LastEditTime: 2021-10-19 21:43:23
  * @description: file content
  */
 // https://visualgo.net/zh/sorting
@@ -32,8 +32,8 @@ const len = arr.length;
 //     }
 // }
 
-// 快速排序
-// 快速排序：第一层循环，定位好当前索引应该存在的最小值，然后在第二层循环中进行寻找，如果有小于这个值的，记录索引，继续循环，直到找到最小值
+// 选择排序
+// 选择排序：第一层循环，定位好当前索引应该存在的最小值，然后在第二层循环中进行寻找，如果有小于这个值的，记录索引，继续循环，直到找到最小值
 var min = 0;
 for (let i = 0; i < len - 1; i++) {
     // 默认定义第一个索引所在是最小值
