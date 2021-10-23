@@ -2,7 +2,7 @@
  * @author: xiejiaxin
  * @Date: 2021-10-23 14:29:07
  * @LastEditors: xiejiaxin
- * @LastEditTime: 2021-10-23 15:50:58
+ * @LastEditTime: 2021-10-23 15:53:58
  * @description: file content
  */
 // https://leetcode-cn.com/problems/merge-two-sorted-lists/
@@ -52,19 +52,16 @@ var mergeTwoLists_my = function (l1, l2) {
         return null;
     }
     let newL = new ListNode();
-    let nowVal = {};
     do {
-        nowVal = JSON.parse(JSON.stringify(nowVal)).next;
         if (l1.val < l2.val) {
             const newNode1 = new ListNode(l1.val);
-            nowVal.next = newNode1;
+            newL.next = newNode1;
             l1 = l1.next;
         } else {
             const newNode2 = new ListNode(l2.val);
             nowVal.next = newNode2;
             l2 = l2.next;
         }
-        newL = nowVal;
     } while (l1 && l2)
     return nowVal.next;
 };
@@ -89,4 +86,4 @@ var mergeTwoLists_learn = function (l1, l2) {
         return l1;
     }
 }
-console.log(mergeTwoLists_learn(l1, l2));
+console.log(mergeTwoLists_my(l1, l2));
