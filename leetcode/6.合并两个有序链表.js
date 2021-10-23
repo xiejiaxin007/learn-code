@@ -2,7 +2,7 @@
  * @author: xiejiaxin
  * @Date: 2021-10-23 14:29:07
  * @LastEditors: xiejiaxin
- * @LastEditTime: 2021-10-23 15:53:58
+ * @LastEditTime: 2021-10-23 16:54:52
  * @description: file content
  */
 // https://leetcode-cn.com/problems/merge-two-sorted-lists/
@@ -16,6 +16,10 @@
 
 // 输入：l1 = [], l2 = [0]
 // 输出：[0]
+
+//! 两个对象指向同一片内存，比如obj=obj1，如果obj = obj.x
+//! 这个时候分两种情况，如果obj.x仍旧是一个引用类型，则如果修改obj.x，则obj1也会跟着变化
+//! 如果obj.x是一个值类型，则修改obj.x，obj1不会变化
 
 /**
  * @param {ListNode} l1
@@ -41,29 +45,30 @@ for (let i = L2.length - 1; i >= 0 ; i--) {
 console.log('***************************************')
 var mergeTwoLists_my = function (l1, l2) {
     // 判断两个链表是否有空的，如果有，直接等于不为空的即可
-    if (!l1) {
+    if (l1 === null) {
         return l2;
     }
-    if (!l2) {
+    if (l2 === null) {
         return l1;
     }
     // 两个都不为nul
-    if (!l1 && !l2) {
+    if (l1 === null && l2 === null) {
         return null;
     }
-    let newL = new ListNode();
-    do {
+    let p = new ListNode();
+    let newL = p;
+    while (l1 !== null && l2 !== null) {
         if (l1.val < l2.val) {
-            const newNode1 = new ListNode(l1.val);
-            newL.next = newNode1;
+            newL.next = l1;
             l1 = l1.next;
         } else {
-            const newNode2 = new ListNode(l2.val);
-            nowVal.next = newNode2;
+            newL.next = l2;
             l2 = l2.next;
         }
-    } while (l1 && l2)
-    return nowVal.next;
+        newL = newL.next
+        console.log(newL, p)
+    }
+    return p.next;
 };
 // 看了解体思路的
 var mergeTwoLists_learn = function (l1, l2) {
