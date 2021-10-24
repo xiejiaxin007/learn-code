@@ -2,7 +2,7 @@
  * @author: xiejiaxin
  * @Date: 2021-10-23 19:24:53
  * @LastEditors: xiejiaxin
- * @LastEditTime: 2021-10-23 20:36:53
+ * @LastEditTime: 2021-10-23 21:33:42
  * @description: file content
  */
 
@@ -37,10 +37,47 @@ console.log(Function.prototype.__proto__ === Object.prototype, 10) //true
 console.log(Object.__proto__ === Function.prototype, 11) //true
 console.log(Object.prototype.__proto__ === null, 12) // true
 
-let a = 1;
 console.log('******************************************************')
+let a = 1;
 console.log(a.constructor === Number, 1); // true
 console.log(a.__proto__ === Number.prototype, 2); // true
 console.log(Number.__proto__ === Function.prototype, 3) // true
 console.log(Number.prototype.constructor === Number, 4) // true
 console.log(Number.__proto__.__proto__ === Object.prototype, 5) // true
+
+console.log('******************************************************')
+// https://cloud.tencent.com/developer/article/1332827
+function Parent() {
+    this.a = 1;
+    this.b = [1, 2, this.a];
+    this.c = {
+        demo: 5
+    };
+    this.show = function () {
+        console.log(this.a, this.b, this.c.demo);
+    }
+}
+
+function Child() {
+    this.a = 2;
+    this.change = function () {
+        this.b.push(this.a);
+        this.a = this.b.length;
+        this.c.demo = this.a++;
+    }
+}
+Child.prototype = new Parent();
+var parent = new Parent();
+var child1 = new Child();
+var child2 = new Child();
+child1.a = 11;
+child2.a = 12;
+parent.show(); // 1,[1,2,1],5
+child1.show(); // 11,[1,2,1],5
+child2.show(); // 12,[1,2,1],5
+child1.change();
+//! child1和child2相互影响，因为Child构造函数是继承自Parent，也就是child1和child2的__proto__实际是指向Parent的实例（同一个），导致引用是一样的！！！
+child2.change();
+parent.show(); // 1,[1,2,1],5
+child1.show(); // 5,[1,2,1,11,12],5
+child2.show(); // 6,[1,2,1,22,12],5
