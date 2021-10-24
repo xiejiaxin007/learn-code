@@ -2,7 +2,7 @@
  * @author: xiejiaxin
  * @Date: 2021-10-23 19:24:53
  * @LastEditors: xiejiaxin
- * @LastEditTime: 2021-10-23 21:33:42
+ * @LastEditTime: 2021-10-24 20:42:19
  * @description: file content
  */
 
@@ -81,3 +81,60 @@ child2.change();
 parent.show(); // 1,[1,2,1],5
 child1.show(); // 5,[1,2,1,11,12],5
 child2.show(); // 6,[1,2,1,22,12],5
+
+
+console.log('***********************************************')
+//! 理解原型链
+function Foo() {
+    // 实际上就是在window环境下修改了getName方法
+    getName = function () {
+        console.log(1)
+    }
+    return this;
+}
+//! 构造函数直接创建的函数，只能通过构造函数来执行，不能通过加()或者是new
+//! 类似一个私有属性，实例是无法访问的
+Foo.getName = function () {
+    console.log(2)
+}
+//! 只能通过new的实例来进行访问
+Foo.prototype.getName = function () {
+    console.log(3)
+}
+// 这里会进行变量提升
+var getName = function () {
+    console.log(4)
+}
+// 在浏览器环境下，直接报错，所以直接调用getName，走的是变量的方法
+function getName() {
+    console.log(5)
+}
+// Foo.getName(); // 2
+// getName(); // 4
+// Foo().getName(); // 1，需要在浏览器环境进行运行
+// getName(); // 1
+// new Foo.getName(); // 2
+// new Foo().getName(); // 3
+// new new Foo().getName(); // 3
+function Cat(name) {
+    this.name = name
+    this.move = function () {
+        console.log('移动')
+    }
+    this.eat = function () {
+        console.log(`${this.name}爱吃鱼`)
+    }
+    return this
+}
+Cat.prototype.getName = function() {
+    console.log(this.name)
+}
+//给Cat构造函数添加静态方法
+Cat.eat = function () {
+    console.log(`${this.name}爱吃鱼`)
+}
+let cat = new Cat('tom')
+Cat.eat() //Cat爱吃鱼  //这是静态方法
+//   Cat.move() //Cat.move is not a function
+//   cat.eat()  //tom爱吃鱼  //这是实例方法
+//   cat.move()  //移动     //这是实例方法

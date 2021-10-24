@@ -2,10 +2,11 @@
  * @author: xiejiaxin
  * @Date: 2021-10-23 20:40:33
  * @LastEditors: xiejiaxin
- * @LastEditTime: 2021-10-23 22:54:47
+ * @LastEditTime: 2021-10-24 16:12:17
  * @description: file content
  */
 // js中是没有像java那样的继承的，特别是es6之前
+// https://github.com/mqyqingfeng/Blog/issues/16
 
 //* 原型链继承
 // -- 缺点1：子类实例指向了同一份父类实例，如果里面有引用类型的变量，会使用同一份
@@ -156,3 +157,6 @@ class Student extends Person {
 let s1 = new Student('wade', 38, 1000000000)
 console.log(s1)
 s1.showName()
+
+
+console.log('***********************************************')

@@ -2,7 +2,7 @@
  * @author: xiejiaxin
  * @Date: 2021-10-23 14:29:07
  * @LastEditors: xiejiaxin
- * @LastEditTime: 2021-10-23 16:54:52
+ * @LastEditTime: 2021-10-24 11:26:39
  * @description: file content
  */
 // https://leetcode-cn.com/problems/merge-two-sorted-lists/
@@ -44,13 +44,6 @@ for (let i = L2.length - 1; i >= 0 ; i--) {
 // 我自己的
 console.log('***************************************')
 var mergeTwoLists_my = function (l1, l2) {
-    // 判断两个链表是否有空的，如果有，直接等于不为空的即可
-    if (l1 === null) {
-        return l2;
-    }
-    if (l2 === null) {
-        return l1;
-    }
     // 两个都不为nul
     if (l1 === null && l2 === null) {
         return null;
@@ -66,7 +59,12 @@ var mergeTwoLists_my = function (l1, l2) {
             l2 = l2.next;
         }
         newL = newL.next
-        console.log(newL, p)
+    }
+    if (l1 === null) {
+        newL.next = l2;
+    }
+    if (l2 === null) {
+        newL.next = l1;
     }
     return p.next;
 };
