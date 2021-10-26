@@ -1,0 +1,58 @@
+<!--
+ * @author: xiejiaxin
+ * @Date: 2021-10-25 20:08:51
+ * @LastEditors: xiejiaxin
+ * @LastEditTime: 2021-10-25 21:36:51
+ * @description: file content
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .container {
+            width: 200px;
+            height: 200px;
+            margin-top: 100px;
+            background-color: antiquewhite;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <button @click="test">toggle</button>
+        <div class="container" v-my="visible">我是一个div</div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+    <script>
+        // 手写一个v-if
+        Vue.directive('my', {
+            bind: function(el, binding, vnode) {
+                if (binding.value) {
+                    el.style.display = 'block';
+                } else {
+                    el.style.display = 'none';
+                }
+            },
+            componentUpdated: function(el, vnode) {
+                console.log(el, vnode)
+            }
+        });
+        let vm = new Vue({
+            el: '#app',
+            data: {
+                name: 'xjx',
+                visible: false
+            },
+            methods: {
+                test() {
+                    this.visible = !this.visible;
+                }
+            }
+        });
+    </script>
+</body>
+</html>
