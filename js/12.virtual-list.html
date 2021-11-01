@@ -2,7 +2,7 @@
  * @author: xiejiaxin
  * @Date: 2021-10-17 15:37:50
  * @LastEditors: xiejiaxin
- * @LastEditTime: 2021-10-24 20:43:49
+ * @LastEditTime: 2021-10-31 16:28:47
  * @description: file content
 -->
 <!DOCTYPE html>
@@ -4187,7 +4187,8 @@
                     const top = e.target.scrollTop;
                     scrollVal.value = top + 'px';
                     startIdx.value = Math.ceil(top / 40);
-                    endIdx.value = startIdx.value + 5;
+                    // 这个地方可以故意写大一些，这样就可以减少白屏抖动的效果
+                    endIdx.value = startIdx.value + 15;
                     viewList.value = list.value.slice(startIdx.value, endIdx.value);
                 };
                 let fn = throttle(scrollFn)
