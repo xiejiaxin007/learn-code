@@ -2,6 +2,45 @@
  * @author: xiejiaxin
  * @Date: 2021-10-27 14:24:15
  * @LastEditors: xiejiaxin
- * @LastEditTime: 2021-10-27 14:24:16
+ * @LastEditTime: 2021-10-27 14:36:01
  * @description: file content
 -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>flex</title>
+    <style>
+        .wrapper {
+            display: flex;
+            width: 400px;
+            height: 400px;
+            margin: 100px;
+            border: 1px solid #aaa;
+        }
+        .wrapper span{
+            width: 40px;
+            height: 40px;
+            border: 1px solid #000;
+            padding: 10px;
+        }
+        .wrapper span:nth-of-type(2n) {
+            background-color: antiquewhite;
+            align-self: flex-end;
+        }
+        .wrapper span:nth-of-type(2n + 1) {
+            background-color: darkgreen;
+        }
+    </style>
+</head>
+<body>
+    <div class="wrapper">
+        <span>A</span>
+        <span>B</span>
+        <span>C</span>
+        <span>D</span>
+    </div>
+</body>
+</html>
