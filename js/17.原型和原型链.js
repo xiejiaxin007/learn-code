@@ -2,11 +2,12 @@
  * @author: xiejiaxin
  * @Date: 2021-10-23 19:24:53
  * @LastEditors: xiejiaxin
- * @LastEditTime: 2021-10-24 20:42:19
+ * @LastEditTime: 2021-11-01 15:31:45
  * @description: file content
  */
 
 // https://juejin.cn/post/6844903937024213006
+// https://github.com/raxxarr/note/issues/3
 
 // prototype、__proto、constructor
 // Function、Object
