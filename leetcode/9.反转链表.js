@@ -2,7 +2,7 @@
  * @author: xiejiaxin
  * @Date: 2021-10-31 16:52:57
  * @LastEditors: xiejiaxin
- * @LastEditTime: 2021-10-31 21:10:52
+ * @LastEditTime: 2021-11-01 14:12:09
  * @description: file content
  */
 // 给定单链表的头节点 head ，请反转链表，并返回反转后的链表的头节点。
@@ -42,19 +42,16 @@ for (let i = L1.length - 1; i >= 0; i--) {
     }
 };
 
-/** 
- * @param {ListNode} head
- * @return {ListNode}
- */
-var reverseList = function (head) {
-    let node = new ListNode();
-    let res = node;
-    while(head) {
-        const current = new ListNode(head.val);
-        node.next = current;
-        head = head.next;
+var reverseList = function(head) {
+    let pre = null;
+    let cur = head;
+    while(cur) {
+        const next = cur.next;
+        cur.next = pre;
+        pre = cur;
+        cur = next;
     }
-    return res.next;
-};
+    return pre;
+}
 
-console.log(reverseList(list))
+console.log(reverseList(list));
