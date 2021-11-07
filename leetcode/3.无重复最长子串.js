@@ -2,7 +2,7 @@
  * @author: xiejiaxin
  * @Date: 2021-10-16 16:45:25
  * @LastEditors: xiejiaxin
- * @LastEditTime: 2021-10-18 15:07:29
+ * @LastEditTime: 2021-11-07 11:02:12
  * @description: file content
  */
 // https://leetcode-cn.com/problems/longest-substring-without-repeating-characters/
@@ -96,38 +96,21 @@ var lengthOfLongestSubstring_good = function (s) {
 }
 // 双指针，滑动解法
 var lengthOfLongestSubstring = function (s) {
+    let left = 0;
+    let right = 0;
     const len = s.length;
-    if (len <= 1) {
-        return len;
-    }
-    let left = 0, right = 0;
     let set = new Set();
-    let maxLen = 0;
-    let res = 0;
-    while(right < len) {
-        // 如果right值已经存在，左指针向右移动
-        if (set.has(s[right])) {
-            while(left < right - 1) {
-                if (set.has(s[left])) {
-                    set.delete(s[left]);
-                    left++;
-                    maxLen--;
-                } else { 
-                    break;
-                }
-            }
+    let count = 0;
+    while(left < len) {
+        while(right < len && !set.has(s[right])) {
             set.add(s[right]);
-            right++;
-        } else {
-            // 如果当前没有right
-            set.add(s[right]);
-            right++;
-            maxLen++;
+            right++
         }
-        console.log(set)
-        res = Math.max(res, maxLen);
+        count = Math.max(count, set.size);
+        set.delete(s[left]);
+        left++
     }
-    return res;
+    return count;
 }
-// pwwkew/abcabcbb/aab/dvdf
-console.log(lengthOfLongestSubstring('dvdf'));
+// pwwkew/abcabcbb/aab/dvdf/qrsvbspk
+console.log(lengthOfLongestSubstring("tmmzuxt"));
