@@ -2,7 +2,7 @@
  * @author: xiejiaxin
  * @Date: 2021-10-24 20:23:07
  * @LastEditors: xiejiaxin
- * @LastEditTime: 2021-10-24 20:25:19
+ * @LastEditTime: 2021-11-08 21:45:10
  * @description: file content
  */
 // js执行分为编译阶段和运行阶段
@@ -26,3 +26,13 @@ function hoistFunction() {
     foo(); // 1
 }
 hoistFunction();
+
+
+function setName(obj) {
+    obj.name = 'a';
+    obj = new Object();
+    obj.name = 'b';
+}
+let person = new Object();
+setName(person);
+console.log(person.name);

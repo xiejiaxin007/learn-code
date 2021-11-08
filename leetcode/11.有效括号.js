@@ -2,7 +2,7 @@
  * @author: xiejiaxin
  * @Date: 2021-11-07 21:02:37
  * @LastEditors: xiejiaxin
- * @LastEditTime: 2021-11-08 20:44:24
+ * @LastEditTime: 2021-11-08 21:45:00
  * @description: file content
  */
 // https://leetcode-cn.com/problems/valid-parentheses/
