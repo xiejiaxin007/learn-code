@@ -1,8 +1,8 @@
 /*
  * @author: xiejiaxin
  * @Date: 2021-10-16 16:45:25
- * @LastEditors: xiejiaxin
- * @LastEditTime: 2021-11-07 11:02:12
+ * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2021-11-17 14:18:25
  * @description: file content
  */
 // https://leetcode-cn.com/problems/longest-substring-without-repeating-characters/
@@ -96,21 +96,7 @@ var lengthOfLongestSubstring_good = function (s) {
 }
 // 双指针，滑动解法
 var lengthOfLongestSubstring = function (s) {
-    let left = 0;
-    let right = 0;
-    const len = s.length;
-    let set = new Set();
-    let count = 0;
-    while(left < len) {
-        while(right < len && !set.has(s[right])) {
-            set.add(s[right]);
-            right++
-        }
-        count = Math.max(count, set.size);
-        set.delete(s[left]);
-        left++
-    }
-    return count;
+    
 }
 // pwwkew/abcabcbb/aab/dvdf/qrsvbspk
 console.log(lengthOfLongestSubstring("tmmzuxt"));
