@@ -2,7 +2,7 @@
  * @author: xiejiaxin
  * @Date: 2022-02-13 16:43:17
  * @LastEditors: xiejiaxin
- * @LastEditTime: 2022-02-13 17:54:33
+ * @LastEditTime: 2022-02-16 20:37:09
  * @description: https://leetcode-cn.com/problems/maximum-binary-tree/
  */
 function TreeNode(val, left, right) {
@@ -18,7 +18,7 @@ const params = [3,2,1,6,0,5];
 let node = {}
 var constructMaximumBinaryTree = function(nums) {
     if (nums.length === 0) {
-        return;
+        return null;
     }
     if (nums.length === 1) {
         return new TreeNode(nums[0])
