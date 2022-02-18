@@ -1,8 +1,8 @@
 /*
  * @author: xiejiaxin
  * @Date: 2022-02-16 20:04:05
- * @LastEditors: xiejiaxin
- * @LastEditTime: 2022-02-16 21:28:09
+ * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2022-02-18 14:52:26
  * @description: https://leetcode-cn.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal/
  */
 function TreeNode(val, left, right) {
@@ -12,6 +12,8 @@ function TreeNode(val, left, right) {
 }
 const preorder1 = [1,2,3];
 const inorder1 = [3,2,1];
+const preorder2 =[1,2,5,4,6,7,3,8,9];
+const inorder2 = [5,2,6,4,7,1,8,3,9];
 /**
  * @param {number[]} preorder
  * @param {number[]} inorder
@@ -21,6 +23,7 @@ var buildTree = function(preorder, inorder) {
     if (preorder.length === 0) {
         return null
     }
+    // 容易引起死循环
     if (preorder.length === 1) {
         return new TreeNode(preorder[0])
     }
@@ -28,12 +31,10 @@ var buildTree = function(preorder, inorder) {
     const first = preorder[0];
     const root = new TreeNode(first);
     const sep = inorder.findIndex(i => i == first);
-    console.log(sep)
     const left_in = inorder.slice(0, sep);
-    const left_pre = preorder.slice(sep, left_in.length + sep);
+    const left_pre = preorder.slice(1, left_in.length + 1);
     const right_in = inorder.slice(sep + 1);
     const right_pre = preorder.slice(sep + 1);
-    console.log(left_pre, left_in, right_in, right_pre)
     root.left = buildTree(left_pre, left_in);
     root.right = buildTree(right_pre, right_in);
     return root;
