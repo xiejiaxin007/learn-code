@@ -2,7 +2,7 @@
  * @author: xiejiaxin
  * @Date: 2022-02-13 16:43:17
  * @LastEditors: xiejiaxin
- * @LastEditTime: 2022-02-16 20:37:09
+ * @LastEditTime: 2022-02-20 10:53:55
  * @description: https://leetcode-cn.com/problems/maximum-binary-tree/
  */
 function TreeNode(val, left, right) {

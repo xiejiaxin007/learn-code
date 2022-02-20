@@ -2,7 +2,7 @@
  * @author: xiejiaxin
  * @Date: 2022-02-16 20:04:05
  * @LastEditors: xiejiaxin
- * @LastEditTime: 2022-02-16 21:28:09
+ * @LastEditTime: 2022-02-20 10:39:04
  * @description: https://leetcode-cn.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal/
  */
 function TreeNode(val, left, right) {
