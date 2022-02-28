@@ -1,8 +1,8 @@
 /*
  * @author: xiejiaxin
  * @Date: 2022-02-26 14:01:57
- * @LastEditors: xiejiaxin
- * @LastEditTime: 2022-02-26 15:00:47
+ * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2022-02-28 14:36:43
  * @description: https://leetcode-cn.com/problems/find-duplicate-subtrees/
  */
 
@@ -75,4 +75,31 @@ var releaseTree = function (node) {
     const str = left + ',' + right + ',' + node.val;
     return str;
 }
-console.log(findDuplicateSubtrees(node))
+
+var findDuplicateSubtrees_my = function(root) {
+  // 可以在这个地方定义全局变量！！！
+  let res = [];
+  let repeateMap = new Map();
+  var releaseTree_my = function(node) {
+    if (node === null) {
+      return '#';
+    }
+    const str = releaseTree_my(node.left) + ',' + releaseTree_my(node.right) + ',' + node.val;
+    const num = repeateMap.get(str) || 0;
+    if (num === 1) {
+      res.unshift(node)
+    }
+    repeateMap.set(str, num + 1);
+    return str;
+  }
+  releaseTree_my(root);
+  return res;
+}
+// 序列化一个二叉树
+var releaseTree_my = function(root) {
+  if (root === null) {
+    return '#';
+  }
+  return releaseTree_my(root.left) + ',' + releaseTree_my(root.right) + ',' + root.val;
+}
+console.log(findDuplicateSubtrees_my(node))
