@@ -7,6 +7,7 @@
  */
 
 //! BST：二叉搜索树
+//! 搜索二叉树的中旬遍历 === 升序排列每个树的值
 function TreeNode(val, left, right) {
   this.val = val === undefined ? 0 : val;
   this.left = left === undefined ? null : left;
