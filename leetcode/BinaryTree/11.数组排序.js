@@ -1,8 +1,8 @@
 /*
  * @author: xiejiaxin
  * @Date: 2022-03-20 10:59:54
- * @LastEditors: Please set LastEditors
- * @LastEditTime: 2022-03-22 16:33:11
+ * @LastEditors: xiejiaxin
+ * @LastEditTime: 2022-03-27 16:54:21
  * @description: https://leetcode-cn.com/problems/sort-an-array/
  */
 const arr = [-2,3,-5];
@@ -34,7 +34,7 @@ var sortArrayTimeOut2 = function(nums) {
     }
     return nums;
 };
-//? 这个可以了，选择排序
+//? 选择排序的时间复杂度更低，可以通过
 var sortArrayOk = function(nums) {
   for(let i = 0; i < nums.length; i++) {
     let index = i;
@@ -51,8 +51,8 @@ var sortArrayOk = function(nums) {
   }
   return nums;
 };
-//? 并归
-var sortArray = function(numsArr) {
+//? 并归排序更好
+var sortArray_guanfang = function(numsArr) {
   let tempArr = [];
   var sort = function(nums, start, end) {
     if (start == end) {
@@ -87,4 +87,36 @@ var sortArray = function(numsArr) {
   sort(numsArr, left, right);
   return numsArr;
 };
+// 归并排序：在每一个二叉树节点进行一次合并，这个合并的几点，是二叉树后序遍历的时候，也就是左右子节点都确定的时候
+var sortArray = function(numsArr) {
+  if (numsArr.length === 0) {
+    return;
+  }
+  var sort = function(nums, low, hi){
+    let mid = Math.floor((low - hi) / 2);
+    sort(nums, low, mid);
+    sort(nums, mid + 1, hi);
+    mergeNum(nums, low, mid, hi);
+  };
+  var mergeNum = function(nums, low, mid, hi) {
+    var temp = [];
+    // 复制一份nums（深拷贝，相互不影响），因为后续需要直接修改nums数组
+    for (let i = 0; i < nums.length; i++) {
+      temp[i] = nums[i]
+    }
+    let k = low, j = mid + 1;
+    for (let i = 0; i < temp.length; i++) {
+      if (i < j) {
+        if (temp[i] < temp[j]) {
+          nums[i] = temp[k++]
+        } else {
+          nums[i] = temp[j++]
+        }
+      }
+    }
+  }
+  let start = 0, end = numsArr.length - 1;
+  sort(numsArr, start, end);
+  return numsArr;
+}
 console.log(sortArray(arr));
