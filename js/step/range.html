@@ -1,0 +1,59 @@
+<!--
+ * @description: 
+ * @author: xiejiaxin
+ * @e-mail: xiejx@glodon.com
+ * @Date: 2022-06-16 16:09:51
+ * @desc: range学习
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>range学习</title>
+  <style>
+    .app {
+      width: 600px;
+      height: 600px;
+      margin: 30px auto;
+      padding: 50px;
+      box-sizing: border-box;
+      border: 1px solid #aaa;
+    }
+    .wrapper {
+      width: 220px;
+      height: 24px;
+      overflow: hidden;
+    }
+    .cell {
+      white-space: nowrap;
+      width: 50px;
+      overflow: hidden;
+      margin: 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <div class="wrapper">
+      <p class="cell">这是一段测试悬浮窗的文案，这是一段测试悬浮窗的文案，一段测试悬浮窗的文案，这是一段测试悬浮窗的文案，这是一段测试悬浮窗的文案，这是一段测试悬浮窗的文案，这是一段测试悬浮窗的文案，这是一段测试悬浮窗的文案，这是一段测试悬浮窗的文案</p>
+    </div>
+  </div>
+  <script>
+    // 为什么要使用range，就是因为不管父级dom设置了宽度还是overflow，都能准确计算出内容的真是宽度，就能根据这个真是宽度来判断，是否需要出现悬浮框了
+    const cell = document.getElementsByClassName('cell')[0];
+    // 计算是否需要出现悬浮框
+    function expli(dom) {
+      const range = document.createRange();
+      range.setStart(dom, 0);
+      range.setEnd(dom, dom.childNodes.length);
+      // const seles = window.getSelection();
+      // seles.removeAllRanges();
+      // seles.addRange(range);
+      console.log(range.getBoundingClientRect().width, dom.offsetWidth);
+    }
+    expli(cell);
+  </script>
+</body>
+</html>
