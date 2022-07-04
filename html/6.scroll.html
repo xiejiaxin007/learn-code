@@ -19,6 +19,8 @@
         #app{
             height: 100px;
             width: 100px;
+            padding: 10px;
+            margin: 10px;
             border: 1px solid #000;
         }
     </style>
@@ -27,7 +29,10 @@
     <!-- <div class="outer">
         <div class="inner"></div>
     </div> -->
+    <div id="app"></div>
     <script>
+        // const app = document.getElementById('app');
+        // console.log(app.offsetWidth, app.clientWidth, app.scrollWidth)
         // !计算浏览器的滚动条宽度（ios计算不出来，因为滚动条是悬浮才会出现的）
         const outer = document.createElement('div');
         outer.className = 'el-scrollbar__wrap';

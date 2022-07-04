@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>flex色子布局</title>
+    <style>
+        .box {
+            display: flex;
+        }
+        .source {
+            margin-bottom: 10px;
+            margin-right: 10px;
+        }
+        .wrapper {
+            width: 200px;
+            height: 200px;
+            padding: 20px;
+            box-sizing: border-box;
+            border: 1px solid #000;
+            border-radius: 20px;
+        }
+        .spot {
+            width: 40px;
+            height: 40px;
+            background-color: #000;
+            border-radius: 50%;
+        }
+        .wrapper-1 {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .wrapper-2 {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .wrapper-2 .column {
+            display: flex;
+        }
+        .wrapper-2 .column:nth-child(2) {
+            justify-content: flex-end;
+        }
+        .wrapper-3 {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .wrapper-3 .column {
+            display: flex;
+        }
+        .wrapper-3 .column:nth-child(2) {
+            justify-content: center;
+        }
+        .wrapper-3 .column:nth-child(3) {
+            justify-content: flex-end;
+        }
+        .wrapper-4 {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .wrapper-4 .column {
+            display: flex;
+            justify-content: space-between;
+        }
+        .wrapper-5 {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .wrapper-5 .column {
+            display: flex;
+            justify-content: space-between;
+        }
+        .wrapper-5 .column:nth-child(2) {
+            display: flex;
+            justify-content: center;
+        }
+        .wrapper-6 {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .wrapper-6 .column {
+            display: flex;
+            justify-content: space-between;
+        }
+    </style>
+</head>
+<body>
+    <!-- https://juejin.cn/post/7112451678615371790 -->
+    <div class="box">
+        <div class="source">
+            <div class="wrapper wrapper-1">
+                <div class="spot"></div>
+            </div>
+        </div>
+        <div class="source">
+            <div class="wrapper wrapper-2">
+                <div class="column">
+                    <div class="spot"></div>
+                </div>
+                <div class="column">
+                    <div class="spot"></div>
+                </div>
+            </div>
+        </div>
+        <div class="source">
+            <div class="wrapper wrapper-3">
+                <div class="column">
+                    <div class="spot"></div>
+                </div>
+                <div class="column">
+                    <div class="spot"></div>
+                </div>
+                <div class="column">
+                    <div class="spot"></div>
+                </div>
+            </div>
+        </div>
+        <div class="source">
+            <div class="wrapper wrapper-4">
+                <div class="column">
+                    <div class="spot"></div>
+                    <div class="spot"></div>
+                </div>
+                <div class="column">
+                    <div class="spot"></div>
+                    <div class="spot"></div>
+                </div>
+            </div>
+        </div>
+        <div class="source">
+            <div class="wrapper wrapper-5">
+                <div class="column">
+                    <div class="spot"></div>
+                    <div class="spot"></div>
+                </div>
+                <div class="column">
+                    <div class="spot"></div>
+                </div>
+                <div class="column">
+                    <div class="spot"></div>
+                    <div class="spot"></div>
+                </div>
+            </div>
+        </div>
+        <div class="source">
+            <div class="wrapper wrapper-6">
+                <div class="column">
+                    <div class="spot"></div>
+                    <div class="spot"></div>
+                </div>
+                <div class="column">
+                    <div class="spot"></div>
+                    <div class="spot"></div>
+                </div>
+                <div class="column">
+                    <div class="spot"></div>
+                    <div class="spot"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
