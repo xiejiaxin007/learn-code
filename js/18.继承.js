@@ -1,12 +1,13 @@
 /*
  * @author: xiejiaxin
  * @Date: 2021-10-23 20:40:33
- * @LastEditors: xiejiaxin
- * @LastEditTime: 2021-10-24 16:12:17
+ * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2024-02-19 09:50:17
  * @description: file content
  */
 // js中是没有像java那样的继承的，特别是es6之前
 // https://github.com/mqyqingfeng/Blog/issues/16
+// https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Inheritance_and_the_prototype_chain
 
 //* 原型链继承
 // -- 缺点1：子类实例指向了同一份父类实例，如果里面有引用类型的变量，会使用同一份

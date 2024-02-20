@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+
+  <script>
+    /**
+     * @param {number[]} nums
+     * @return {number[]}
+     */
+    // 快速排序
+    // key,left,right------------sort(left, key), sort(key+1, right)
+    // 1,2,3,1,key=5
+    // 
+    let arr = [6, 2, 1, 7, 9];
+    var sortArray = function (nums) {
+      let key = nums[0],
+        left = 0,
+        right = nums.length - 1;
+      while (left < right) {
+        if (key <= nums[right]) {
+          right--
+        }
+      }
+    };
+    sortArray(arr)
+    // console.log()
+  </script>
+</body>
+
+</html>

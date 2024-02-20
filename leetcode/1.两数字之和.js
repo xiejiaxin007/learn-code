@@ -1,8 +1,8 @@
 /*
  * @author: xiejiaxin
  * @Date: 2021-10-15 10:10:12
- * @LastEditors: xiejiaxin
- * @LastEditTime: 2021-10-15 10:35:27
+ * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2024-01-03 15:43:15
  * @description: file content
  */
 // 给定一个整数数组 nums 和一个整数目标值 target，请你在该数组中找出 和为目标值 target  的那 两个 整数，并返回它们的数组下标。
@@ -43,5 +43,27 @@ var twoSum1 = function (nums, target) {
     }
     return rel;
 };
+/**
+ * @param {number[]} nums
+ * @param {number} target
+ * @return {number[]}
+ */
+var twoSum = function(nums, target) {
+  const prevNums = {};       // 存储出现过的数字，和对应的索引               
+
+  for (let i = 0; i < nums.length; i++) { // 遍历元素   
+    const curNum = nums[i];               // 当前元素   
+    const targetNum = target - curNum;    // 满足要求的目标元素   
+    const targetNumIndex = prevNums[targetNum]; // 在prevNums中获取目标元素的索引
+    if (targetNumIndex !== undefined) { // 如果存在，直接返回 [目标元素的索引,当前索引]
+      return [targetNumIndex, i];
+    } else {                   // 如果不存在，说明之前没出现过目标元素
+      prevNums[curNum] = i;    // 存入当前的元素和对应的索引
+    }
+  }
+};
+
+const nums = [0,4,3,0], target = 0;
+twoSum(nums, target);
 
 console.log(twoSum1(arr, 9))

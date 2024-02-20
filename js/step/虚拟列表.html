@@ -1,0 +1,172 @@
+<!--
+ * @description: 
+ * @author: xiejiaxin
+ * @e-mail: xiejx@glodon.com
+ * @Date: 2024-02-18 11:16:11
+ * @desc: 
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>虚拟列表</title>
+  <style>
+    body,
+    html {
+      margin: 0;
+    }
+
+    #wrapper {
+      width: 600px;
+      height: 600px;
+      margin: 40px auto 20px;
+      overflow-y: auto;
+      border: 1px solid #aaa;
+    }
+
+    #container {
+      box-sizing: border-box;
+    }
+
+    ul,
+    li {
+      list-style: none;
+    }
+
+    li {
+      height: 60px;
+      line-height: 60px;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="wrapper">
+    <ul id="container"></ul>
+  </div>
+  <script src="./data.js"></script>
+  <script>
+    // 固定高度
+    // 使用rFm来进行优化
+    // 非固定高度的item，则比较复制，需要动态计算每一个item的高度，然后进行页面的重新排列
+    const maxLen = DATA.length;
+    let maxItemLen = 10;
+    (function () {
+      const wrapper = document.getElementById('wrapper');
+      maxItemLen = Math.floor(wrapper.clientHeight / 60)
+      // 渲染时候加载10条数据
+      let ulDom = document.getElementById('container');
+      let liDom = '';
+      for (let i = 0; i < maxItemLen; i++) {
+        liDom += `
+        <li>
+          <span class="id">${DATA[i].id}</span>--
+          <span class="name">${DATA[i].id}${DATA[0].name}</span>
+        </li>
+        `;
+      }
+      ulDom.innerHTML = liDom
+      // 计算需要的内容器高度
+      const maxHeight = maxLen * 60 + 'px'
+      ulDom.style.height = maxHeight
+    })();
+
+    function throttle(func, delay) {
+      var timer = null;
+      var startTime = Date.now(); //设置开始时间
+      return function () {
+        var curTime = Date.now();
+        var remaining = delay - (curTime - startTime); //剩余时间
+        var context = this;
+        var args = arguments;
+        clearTimeout(timer);
+        if (remaining <= 0) { // 第一次触发立即执行
+          func.apply(context, args);
+          startTime = Date.now();
+        } else {
+          timer = setTimeout(func, remaining); //取消当前计数器并计算新的remaining
+        }
+      }
+    }
+
+    function debounce(func, wait) {
+      let timeout;
+
+      return function () {
+        let context = this; // 保存this指向
+        let args = arguments; // 拿到event对象
+
+        clearTimeout(timeout)
+        timeout = setTimeout(function () {
+          func.apply(context, args)
+        }, wait);
+      }
+    }
+
+    function throttled(fn, wait) {
+      let context, args, timer,
+        prev = 0
+
+      function later() {
+        prev = new Date().valueOf()
+        timer = null
+        console.log('最后一次执行')
+        fn.apply(context, args)
+      }
+      const throttled = function () {
+        context = this,
+          args = arguments
+        let now = new Date().valueOf()
+        //下次触发fn剩余的时间
+        let remaining = wait - (now - prev)
+        console.log('剩余时间：', remaining, timer)
+        // 1、 第一次触发肯定走进这里
+        //该执行了 || 用户修改了系统时间
+        if (remaining <= 0 || remaining > wait) {
+          //如果还可以执行立即触发的动作，就清掉定时器
+          if (timer) {
+            clearTimeout(timer)
+            timer = null
+          }
+          prev = now //更新prev
+          fn.apply(context, args)
+        } else if (!timer) {
+          //不满足下一次触发时间，任务队列放入setTimeout，保证触发最后一次
+          timer = setTimeout(later, remaining)
+        }
+      }
+      return throttled
+    }
+    // 容器滚动事件
+    let wrapperDom = document.getElementById('wrapper');
+    let ulDom = document.getElementById('container');
+
+    function handler(e) {
+      let currentCrollTop = wrapperDom.scrollTop;
+      let liDom = ''
+      if (currentCrollTop >= 0) {
+        let addTop = currentCrollTop;
+        const out = Math.floor(addTop / 60) <= (maxLen - maxItemLen) ? Math.floor(addTop / 60) : maxLen - maxItemLen;
+        const len = out + maxItemLen
+        if (len > maxLen) {
+          return
+        }
+        for (let i = out; i < len; i++) {
+          liDom += `
+          <li>
+            <span class="id">${DATA[i].id}</span>--
+            <span class="name">${DATA[i].id}${DATA[0].name}</span>
+          </li>
+          `;
+        }
+        ulDom.innerHTML = liDom
+        ulDom.style.paddingTop = addTop + 'px'
+      }
+    }
+    wrapperDom.addEventListener('scroll', throttle(handler, 300));
+  </script>
+</body>
+
+</html>
