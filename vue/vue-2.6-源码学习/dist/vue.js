@@ -986,6 +986,7 @@
    * returns the new observer if successfully observed,
    * or the existing observer if the value already has one.
    */
+  // ! 数据劫持入口
   function observe (value, asRootData) {
     if (!isObject(value) || value instanceof VNode) {
       return
@@ -4651,6 +4652,7 @@
     if (opts.props) { initProps(vm, opts.props); }
     if (opts.methods) { initMethods(vm, opts.methods); }
     if (opts.data) {
+      // ! 进行data对象里头的数据劫持操作
       initData(vm);
     } else {
       observe(vm._data = {}, true /* asRootData */);
@@ -4709,8 +4711,11 @@
     toggleObserving(true);
   }
 
+  // ! 给data里头进行数据劫持的操作
   function initData (vm) {
     var data = vm.$options.data;
+    // ! data和vm._data都进行赋值
+    // ! 此处会先判断data是否是一个function，如果是，则调用function，如果是对象，则直接赋值，如果不是对象也不是function，则抛出错误
     data = vm._data = typeof data === 'function'
       ? getData(data, vm)
       : data || {};
@@ -4723,10 +4728,12 @@
       );
     }
     // proxy data on instance
+    //  ! 这个地方使用Object.keys方法，则代表data里头必须是可枚举的属性，否则将不会被进行数据绑定
     var keys = Object.keys(data);
     var props = vm.$options.props;
     var methods = vm.$options.methods;
     var i = keys.length;
+    // ! 这个地方其实是检查一遍data里头的属性值是否跟methods或者是props里头声明的属性重复，重复了则会抛出警告
     while (i--) {
       var key = keys[i];
       {
@@ -4744,10 +4751,13 @@
           vm
         );
       } else if (!isReserved(key)) {
+        // ! 这个地方要判断属性值key是否是$或者_开头的
+        // TODO-回头再来看
         proxy(vm, "_data", key);
       }
     }
     // observe data
+    // ! 实现数据劫持
     observe(data, true /* asRootData */);
   }
 
@@ -5011,6 +5021,7 @@
       initRender(vm);
       callHook(vm, 'beforeCreate');
       initInjections(vm); // resolve injections before data/props
+      // ! 实例化状态--data/watch/props/methods
       initState(vm);
       initProvide(vm); // resolve provide after data/props
       callHook(vm, 'created');
@@ -5084,6 +5095,7 @@
     return modified
   }
 
+  // ! new Vue()就是从这个地方开始执行的
   function Vue (options) {
     if (!(this instanceof Vue)
     ) {
