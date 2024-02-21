@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>vue-虚拟滚动列表组件封装</title>
+  <style>
+    html,
+    body {
+      margin: 0
+    }
+
+    #app {
+      height: 100%;
+    }
+    [v-cloak] {
+      display: none !important;
+    }
+    .virtual-container {
+      position: relative;
+      height: 600px;
+      width: 600px;
+      border: 1px solid #aaa;
+      overflow-y: auto;
+    }
+
+    .virtual-item {
+      height: 60px;
+      line-height: 60px;
+      padding: 0 10px;
+      box-sizing: border-box;
+      border: 1px solid #aaa;
+      border-left: none;
+      border-right: none;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="app" v-cloak>
+    <div class="virtual-container">
+      <div class="virtual-client-box" ref="realBox">
+        <div class="virtual-item" v-for="item in currentList">
+          <span>{{item.id}}</span>--
+          <span>{{item.name}}</span>--
+          <span>{{item.email}}</span>--
+          <span>{{item.datatime}}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Mock.js/1.0.0/mock-min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/3.4.19/vue.global.min.js"></script>
+  <!-- <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script> -->
+  <script>
+    const {
+      createApp,
+      ref,
+      onMounted
+    } = Vue
+    // 可见数据量
+    const CURLEN = 10
+    const ITEMHEI = 60;
+    // Mock模拟一组数据
+    const {data} = Mock.mock({
+      "data|100": [ // 属性 data 的值是一个数组，其中含有50个元素,也可以写成1-50随机生成1到50不定个数的元素
+        {
+          "id|+1": 1, // 从0开始自增
+          "name": "@cname", // 随机生成中文姓名
+          "firstname": "@cfirst", // 随机生成中文姓
+          "email": "@email", // 邮箱
+          "datatime": "@date('yy-MM-dd hh:mm:ss')", // 随机生成指定格式的时间
+          age: "@integer(20, 30)", //20-30返回一个随机的整数,数字随意更改
+          gender: "@string('男女', 1)", //在'男女'字符串中随机生成一个
+          telephone: /^1[0-9]{10}$/, //也可以写正则
+          email: "@email()", //随机生成一个email
+        }
+      ]
+    });
+    const app = createApp({
+      /* 根组件选项 */
+      setup() {
+        let currentList = ref([])
+        const realBox = ref(null)
+        // 计算所有logitem的总高度
+        let AllHeight = data.length * ITEMHEI;
+        onMounted(() => {
+          realBox.value.style.height = AllHeight + 'px'
+          // 渲染10条数据
+          currentList.value = data.slice(0, CURLEN)
+        });
+
+        return {
+          currentList,
+          realBox
+        }
+      }
+    })
+    app.mount('#app')
+  </script>
+</body>
+
+</html>
