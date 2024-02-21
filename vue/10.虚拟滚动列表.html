@@ -14,15 +14,21 @@
     #app {
       height: 100%;
     }
+
     [v-cloak] {
       display: none !important;
     }
+
     .virtual-container {
-      position: relative;
       height: 600px;
       width: 600px;
       border: 1px solid #aaa;
       overflow-y: auto;
+      box-sizing: border-box;
+    }
+
+    .virtual-client-box {
+      box-sizing: border-box;
     }
 
     .virtual-item {
@@ -62,8 +68,8 @@
     // 可见数据量
     const CURLEN = 10
     const ITEMHEI = 60;
-    // Mock模拟一组数据
-    const {data} = Mock.mock({
+    // Mock模拟一组数据---start
+    const { data } = Mock.mock({
       "data|100": [ // 属性 data 的值是一个数组，其中含有50个元素,也可以写成1-50随机生成1到50不定个数的元素
         {
           "id|+1": 1, // 从0开始自增
@@ -78,17 +84,63 @@
         }
       ]
     });
+    const MAXLENT = data.length;
+
+    // Mock模拟一组数据---end
     const app = createApp({
       /* 根组件选项 */
-      setup() {
+      setup () {
         let currentList = ref([])
         const realBox = ref(null)
         // 计算所有logitem的总高度
         let AllHeight = data.length * ITEMHEI;
+
+        // 自定义方法
+        function throttle (func, delays) {
+          var timer = null;
+          var startTime = Date.now(); //设置开始时间
+          let delay = delays || 500
+          return function () {
+            var curTime = Date.now();
+            var remaining = delay - (curTime - startTime); //剩余时间
+            var context = this;
+            var args = arguments;
+            clearTimeout(timer);
+            if (remaining <= 0) { // 第一次触发立即执行
+              func.apply(context, args);
+              startTime = Date.now();
+            } else {
+              timer = setTimeout(func, remaining); //取消当前计数器并计算新的remaining
+            }
+          }
+        }
+
+        function handler () {
+          const listDom = document.getElementsByClassName('virtual-container')[0];
+          let currentCrollTop = listDom.scrollTop;
+          let liDom = ''
+          if (currentCrollTop >= 0) {
+            let addTop = currentCrollTop;
+            const out = Math.floor(addTop / ITEMHEI) <= (MAXLENT - CURLEN) ? Math.floor(addTop / ITEMHEI) : MAXLENT - CURLEN;
+            const len = out + CURLEN
+            if (len > MAXLENT) {
+              return
+            }
+            const wrapperDom = document.getElementsByClassName('virtual-client-box')[0]
+            currentList.value = data.slice(out, len)
+            wrapperDom.style.paddingTop = addTop + 'px'
+          }
+        }
+
+        // dom渲染完成
         onMounted(() => {
+          const listDom = document.getElementsByClassName('virtual-container')[0];
           realBox.value.style.height = AllHeight + 'px'
           // 渲染10条数据
           currentList.value = data.slice(0, CURLEN)
+
+          // 监听滚动事件
+          listDom.addEventListener('scroll', throttle(handler))
         });
 
         return {
