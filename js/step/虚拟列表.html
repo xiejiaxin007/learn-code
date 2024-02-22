@@ -91,53 +91,40 @@
       }
     }
 
-    function debounce(func, wait) {
-      let timeout;
-
-      return function () {
-        let context = this; // 保存this指向
-        let args = arguments; // 拿到event对象
-
-        clearTimeout(timeout)
-        timeout = setTimeout(function () {
-          func.apply(context, args)
-        }, wait);
-      }
+    function throttle1(fn, delay) {
+      let timer = null;
+      return function (...arg) {
+        if (!timer) {
+          timer = setTimeout(() => {
+            fn.apply(this, arg);
+            clearTimeout(timer);
+            timer = null
+          }, delay || 500);
+        }
+      };
     }
 
-    function throttled(fn, wait) {
-      let context, args, timer,
-        prev = 0
-
-      function later() {
-        prev = new Date().valueOf()
-        timer = null
-        console.log('最后一次执行')
-        fn.apply(context, args)
-      }
-      const throttled = function () {
-        context = this,
-          args = arguments
-        let now = new Date().valueOf()
-        //下次触发fn剩余的时间
-        let remaining = wait - (now - prev)
-        console.log('剩余时间：', remaining, timer)
-        // 1、 第一次触发肯定走进这里
-        //该执行了 || 用户修改了系统时间
-        if (remaining <= 0 || remaining > wait) {
-          //如果还可以执行立即触发的动作，就清掉定时器
-          if (timer) {
-            clearTimeout(timer)
-            timer = null
+    function allDebounce(fn, delay, immi) {
+      let timer = null;
+      let lay = delay || 100;
+      return function (...args) {
+        let context = this;
+        if (timer) clearTimeout(timer);
+        if (immi) {
+          if (!timer) {
+            fn.apply(context, args);
           }
-          prev = now //更新prev
-          fn.apply(context, args)
-        } else if (!timer) {
-          //不满足下一次触发时间，任务队列放入setTimeout，保证触发最后一次
-          timer = setTimeout(later, remaining)
+          timer = setTimeout(() => {
+            fn.apply(context, args);
+            timer = null;
+          }, lay);
+        } else {
+          // 如果不是立即执行，则直接设置好定时器即可
+          timer = setTimeout(() => {
+            fn.apply(context, args);
+          }, lay);
         }
       }
-      return throttled
     }
     // 容器滚动事件
     let wrapperDom = document.getElementById('wrapper');
@@ -165,6 +152,30 @@
         ulDom.style.paddingTop = addTop + 'px'
       }
     }
+
+    function debounce(fn, time, imme = true) {
+      let that = this
+      let timer = null
+      let arg = arguments
+      return function () {
+        if (timer) clearTimeout(timer)
+        if (imme) {
+          if (!timer) fn.apply(that, arg)
+          // 这里为什么要加if判断：立即执行，延时时间没过，timer一直有值，延时时间过了，timer重置为null，才会执行。
+          // 不加if判断，将会每次都执行，防抖就失去意义了。
+          timer = setTimeout(function () {
+            fn.apply(that, arg) // 加这行代码，第一次最后一次都会执行
+            timer = null;
+          }, time)
+
+        } else { // 非立即执行，imme设置为false时候触发
+          timer = setTimeout(function () {
+            fn.apply(that, arg)
+          }, time)
+        }
+      }
+    }
+
     wrapperDom.addEventListener('scroll', throttle(handler, 300));
   </script>
 </body>

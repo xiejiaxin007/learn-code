@@ -1,8 +1,8 @@
 /*
  * @author: xiejiaxin
  * @Date: 2021-10-12 14:39:01
- * @LastEditors: xiejiaxin
- * @LastEditTime: 2021-10-12 15:01:59
+ * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2024-02-22 10:45:27
  * @description: file content
  */
 // 闭包是什么？？
@@ -19,6 +19,21 @@
 // 2.创造私有变量
 // 3.单例模式
 /**------------------------------------- */
+
+// ? 闭包就看这个例子，你就知道变量没有回收是啥意思了
+function myMethod() {
+  var num = 6;
+  return function () {
+    var n = 0;
+    console.log(++n, ++num);
+  };
+}
+//! 关键点就是这个地方，先把内部函数取出来，然后再多次执行，就会导致【num】这个变量一直无法回收，并且一直累加着
+var myFn = myMethod();
+myFn(); // 1 7
+// ! num在一直累加中
+myFn(); // 1 8
+
 
 // 函数内部声明变量，如果不使用var或者let，则会变成全局变量
 function fn() {
@@ -49,3 +64,4 @@ alert(object.getNameFunc()()); // The Window
 //     }
 // };
 // alert(object.getNameFunc()()); // My Object
+
