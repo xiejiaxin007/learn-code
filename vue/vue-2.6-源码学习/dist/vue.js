@@ -923,15 +923,19 @@
     this.value = value;
     this.dep = new Dep();
     this.vmCount = 0;
+    // ! defineProperty(obj, key, value, em)
     def(value, '__ob__', this);
     if (Array.isArray(value)) {
+      // ! 数组处理方式
       if (hasProto) {
+        // ! '__proto__' in {}
         protoAugment(value, arrayMethods);
       } else {
         copyAugment(value, arrayMethods, arrayKeys);
       }
       this.observeArray(value);
     } else {
+      // ! 对象处理方式
       this.walk(value);
     }
   };
@@ -988,10 +992,12 @@
    */
   // ! 数据劫持入口
   function observe (value, asRootData) {
+    // ! typeof=Object
     if (!isObject(value) || value instanceof VNode) {
       return
     }
     var ob;
+    // TODO 看起来是如果已经绑定过了，则不会重新绑定一次
     if (hasOwn(value, '__ob__') && value.__ob__ instanceof Observer) {
       ob = value.__ob__;
     } else if (
@@ -4715,11 +4721,12 @@
   function initData (vm) {
     var data = vm.$options.data;
     // ! data和vm._data都进行赋值
-    // ! 此处会先判断data是否是一个function，如果是，则调用function，如果是对象，则直接赋值，如果不是对象也不是function，则抛出错误
+    // ! 此处会先判断data是否是一个function，如果是，则调用function并设置上下文，如果是对象，则直接赋值，如果不是对象也不是function，则抛出错误
     data = vm._data = typeof data === 'function'
       ? getData(data, vm)
       : data || {};
     if (!isPlainObject(data)) {
+      // ! 判断是否是对象类型---[object, object]
       data = {};
       warn(
         'data functions should return an object:\n' +
@@ -4728,7 +4735,7 @@
       );
     }
     // proxy data on instance
-    //  ! 这个地方使用Object.keys方法，则代表data里头必须是可枚举的属性，否则将不会被进行数据绑定
+    //  ! 这个地方使用Object.keys方法，则代表data里头必须是可枚举的属性，否则将不会被循环，也就是不会被进行数据绑定
     var keys = Object.keys(data);
     var props = vm.$options.props;
     var methods = vm.$options.methods;
@@ -4763,6 +4770,7 @@
 
   function getData (data, vm) {
     // #7573 disable dep collection when invoking data getters
+    // TODO 后面可以看看这个是拿来做啥的
     pushTarget();
     try {
       return data.call(vm, vm)
@@ -4982,6 +4990,7 @@
   var uid$3 = 0;
 
   function initMixin (Vue) {
+    // ! 将Vue传入，则function Vue中可以直接使用this._init
     Vue.prototype._init = function (options) {
       var vm = this;
       // a uid
@@ -5016,14 +5025,19 @@
       }
       // expose real self
       vm._self = vm;
+      // ? 初始化生命周期函数
       initLifecycle(vm);
+      // ? 初始化事件
       initEvents(vm);
+      // ? 初始化render函数
       initRender(vm);
+      // ? 调用声明周期beforeCreate
       callHook(vm, 'beforeCreate');
       initInjections(vm); // resolve injections before data/props
-      // ! 实例化状态--data/watch/props/methods
+      // ? 实例化状态--data/watch/props/methods
       initState(vm);
       initProvide(vm); // resolve provide after data/props
+      // ? 调用生命周期函数created
       callHook(vm, 'created');
 
       /* istanbul ignore if */
@@ -5033,6 +5047,7 @@
         measure(("vue " + (vm._name) + " init"), startTag, endTag);
       }
 
+      // ! 如果new Vue中设置了el，则使用el参数来进行挂载
       if (vm.$options.el) {
         vm.$mount(vm.$options.el);
       }
