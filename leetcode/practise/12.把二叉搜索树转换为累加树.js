@@ -76,6 +76,7 @@ var transferTree = function(root) {
 }
 
 // ! 更简单，原来左右子树可以换一个顺序就能更改执行顺序了！！！！！
+// ! 更改遍历的right和left顺序，实际就是从升序变成了降序遍历了
 var convertBST_better = function(root) {
   // ? 先反转一遍二叉树
   let sum = 0;
