@@ -334,7 +334,7 @@
       lazy: Boolean,
 
       load: Function,
-      // kangx：新增props
+      // kangx：新增props-----------------------------------start
       // 是否是虚拟dom
       scrollDom: {
         type: Boolean,
@@ -350,6 +350,7 @@
         type: Number,
         default: 0
       }
+      // kangx：新增props----------------------------------------end
     },
 
     components: {
