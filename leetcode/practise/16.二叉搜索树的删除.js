@@ -40,7 +40,7 @@ const buildTree = (arr) => {
   return head;
 };
 
-let node = buildTree([5,3,6,2,4,null,7]);
+let node = buildTree([5, 3, 6, 2, 4, null, 7]);
 let vals = 5;
 /**
  * @param {TreeNode} root
@@ -48,10 +48,36 @@ let vals = 5;
  * @return {TreeNode}
  */
 var deleteNode = function (root, key) {
+  if (root == null) {
+    return null
+  }
   if (root.val === key) {
     // 进行一波删除操作
-  // ? 如果key正好是叶子节点，则直接进行删除即可
-  // ? 如果key是非叶子节点，则需要把该节点删除后，又将其左右节点根据搜索二叉树的规律进行拼接（左边的节点必须小于当前节点，右边的则大于当前节点）
+    // ? 如果key正好是叶子节点，则直接进行删除即可
+    // ? 如果key是非叶子节点，则需要把该节点删除后，又将其左右节点根据搜索二叉树的规律进行拼接（左边的节点必须小于当前节点，右边的则大于当前节点）
+    if (root.left == null && root.right == null) {
+      return null;
+    } else if (root.left == null && root.right != null) {
+      return root.right;
+    } else if (root.left != null && root.right == null) {
+      return root.left;
+    } else if (root.left != null && root.right != null) {
+      // ! 找出左子树最大的值或者是找到右子树最小的值
+      let arr = []
+      function getMin(node) {
+        if (node == null) {
+          return null
+        }
+        arr.push(node.val)
+        getMin(node.left);
+        getMin(node.right);
+      }
+      getMin(root.right);
+      let min = Math.min(...arr);
+      // ! 这个地方严格来说，不应该直接替换val，应该是把整个节点进行替换的
+      root.val = min
+      root.right = deleteNode(root.right, min)
+    }
   } else if (root.val > key) {
     root.left = deleteNode(root.left, key)
   } else if (root.val < key) {
@@ -59,5 +85,5 @@ var deleteNode = function (root, key) {
   }
   return root;
 };
-
+// deleteNode(node, vals)
 console.log(deleteNode(node, vals));
