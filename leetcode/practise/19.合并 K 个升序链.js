@@ -42,30 +42,31 @@ var mergeKLists = function(lists) {
   }
   lists = outNullItem(lists)
   while(checkNull(lists)) {
-    console.log(lists)
-    let firIndex = 0
     let len = lists.length
     let min = lists[0].val
+    let obj = {
+      index: 0,
+      list: null
+    }
     for(let i = 1; i < len; i++) {
-      if (lists[i]) {
-        if (lists[i].val < min) {
-          min = lists[i].val
-          res.next = new ListNode(min)
-          res = res.next
-          lists[i] = lists[i].next
-          firIndex = i;
-        } else {
-          continue
+      if (lists[i].val <= min) {
+        min = lists[i].val
+        obj = {
+          index: i,
+          list: lists[i]
         }
-      } else {
-        continue
       }
-      if (firIndex === 0) {
-        res.next = new ListNode(lists[firIndex].val)
-        res = res.next
-        min = lists[firIndex].val
-        lists[firIndex] = lists[firIndex].next
-      }
+    }
+    if (obj.index) {
+      res.next = new ListNode(lists[obj.index].val)
+      res = res.next
+      lists[obj.index] = lists[obj.index].next
+    }
+    if (obj.index === 0) {
+      res.next = new ListNode(lists[obj.index].val)
+      res = res.next
+      min = lists[obj.index].val
+      lists[obj.index] = lists[obj.index].next
     }
     lists = outNullItem(lists)
   }
