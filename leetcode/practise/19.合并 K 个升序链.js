@@ -41,7 +41,7 @@ var mergeKLists = function(lists) {
     return arr.filter(item => item)
   }
   lists = outNullItem(lists)
-  while(checkNull(lists)) {
+  while(lists.length > 0) {
     let len = lists.length
     let min = lists[0].val
     let obj = {
