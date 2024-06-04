@@ -49,12 +49,23 @@ var reverseList_arr = function (head) {
 };
 // ! 递归
 var reverseList = function (head) {
-  if (head === null || head.next === null) {
-    return head;
+  // ? 相当于需要将链表最后一个节点给返回
+  if (head == null || head.next == null) {
+    return head
   }
-  var last = reverseList(head.next);
-  head.next.next = head;
-  head.next = null;
-  return last;
-};
-console.log(reverseList(val1));
+  // ? 拿到最后一个返回节点
+  let last = reverseList(head.next)
+  head.next.next = head
+  head.next = null
+  return last
+}
+let resNode = reverseList(val1)
+console.log(resNode);
+// var test = function(head) {
+//   if (head == null) {
+//     return null
+//   }
+//   console.log(head.val)
+//   test(head.next)
+// }
+// test(val1)

@@ -23,9 +23,9 @@ function getListFromArray(a, po) {
   pre.next = circle;
   return dummy.next;
 }
-let val1 = getListFromArray([1, 2, 3, 4, 5]);
+let val1 = getListFromArray([1, 2, 3,4,5]);
 let keyL = 2,
-  keyR = 4;
+  keyR = 3;
 
 /**
  * @param {ListNode} head
@@ -33,7 +33,7 @@ let keyL = 2,
  * @param {number} right
  * @return {ListNode}
  */
-var reverseBetween = function (head, left, right) {
+var reverseBetweenMy = function (head, left, right) {
   if (head == null) {
     return null;
   }
@@ -82,5 +82,87 @@ var reverseBetween = function (head, left, right) {
   }
   return resCop.next
 };
-// console.log(tranverse(val1), dummy.next);
+// ! 递归版本（我的）
+var reverseBetween_my = function (root, left, right) {
+  if (root == null) {
+    return null
+  }
+  let i = 0
+  let midHead = new ListNode(-1);
+  let midRoot = midHead
+  let leftHead = new ListNode(-1)
+  let leftRoot = leftHead
+  while(root && i < right) {
+    i++
+    if (i <= right && i >= left) {
+      midHead.next = new ListNode(root.val)
+      midHead = midHead.next
+    } else if (i < left) {
+      leftHead.next = new ListNode(root.val)
+      leftHead = leftHead.next
+    }
+    root = root.next
+  }
+  var newReverse = function(head) {
+    if(head == null || head.next == null) {
+      return head
+    }
+  
+    let nextRoot = newReverse(head.next)
+    head.next.next = head
+    head.next = null
+    return nextRoot
+  }
+  let newRoot = newReverse(midRoot.next)
+  leftRoot = leftRoot.next
+  // console.log(leftRoot, newRoot, root)
+  if (leftRoot && newRoot) {
+    let concatRoot = leftRoot
+    while(leftRoot.next) {
+      leftRoot = leftRoot.next
+    }
+    leftRoot.next = newRoot
+    while(leftRoot.next) {
+      leftRoot = leftRoot.next
+    }
+    leftRoot.next = root
+    return concatRoot
+  } else if (leftRoot && !newRoot) {
+    let concatRoot = leftRoot
+    while(leftRoot.next) {
+      leftRoot = leftRoot.next
+    }
+    leftRoot.next = root
+    return concatRoot
+  } else {
+    let concatRoot = newRoot
+    while(newRoot.next){
+      newRoot = newRoot.next
+    }
+    newRoot.next = root
+    return concatRoot
+  }
+}
+// ! 真！ 递归版本
+var successor = null;
+var reverseN = function(head, n) {
+  if (n == 1) {
+    successor = head.next
+    return head
+  }
+  let last = reverseN(head.next, n - 1)
+  head.next.next = head
+  head.next = successor
+  return last
+}
+var reverseBetween = function (root, left, right) {
+  // if (root == null) {
+  //   return null
+  // }
+  if (left == 1) {
+    return reverseN(root, right)
+  }
+  root.next = reverseBetween(root.next, left - 1, right - 1)
+  return root
+}
 console.log(reverseBetween(val1, keyL, keyR));
