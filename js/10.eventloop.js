@@ -1,8 +1,8 @@
 /*
  * @author: xiejiaxin
  * @Date: 2021-10-14 22:05:14
- * @LastEditors: xiejiaxin
- * @LastEditTime: 2021-10-22 17:00:31
+ * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2024-06-06 11:22:56
  * @description: file content
  */
 // js是非阻塞性的一种语言，只能进行单线程运行，原因：因为js的运行环境主要是浏览器，而浏览器有很多IO操作，如果是多线程，那同时对一个dom进行新增又删除，那肯定就乱套了
@@ -61,6 +61,7 @@ const first = () => (new Promise((resolve, reject) => {
         resolve(1);
     });
     resolve(2);
+    // ! resolve或者reject后，如果不添加return，则后面的代码会继续执行
     p.then((arg) => {
         console.log(arg);
     });
@@ -71,5 +72,5 @@ first().then((arg) => {
     console.log(arg);
 });
 console.log(4);
-// 3,7,4,2，1，5，6
+// ! 3 7 4 1 2 5
 
