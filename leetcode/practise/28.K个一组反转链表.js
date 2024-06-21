@@ -67,7 +67,7 @@ var reverseKGroup = function(head, k) {
   }
   return p;
 }
-console.log(reverseKGroup(val, key));
+// console.log(reverseKGroup(val, key));
 
 // 反转整个链表
 // var reverse = function(head) {

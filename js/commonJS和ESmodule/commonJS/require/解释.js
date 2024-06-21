@@ -51,3 +51,10 @@ function require(id) {
   module.loaded = true;
   return module.exports;
 }
+// ! require源码大致理解---我这是默背，可以不用看
+// * require接收唯一参数，这个参数可以是node的核心模块比如fs，也可以是相对路径和绝对路径，也可以是自定义模块，如果是自定义模块，那需要遵循一个查找规则：先找自己评级的node_modules，如果找不到则往上层找，知道没有，那就是package.json里头的main，如果package.json都没有，则找node对应的index.js和各种后缀文件
+// ? require是引入即执行的哦、而且require是不会进行重复引用的哦！！！！如果多次引入，则第二次到之后的引入，都只会给代码做一个module，不会进行代码的执行
+// ? require执行的时候，会经过几个操作：
+// ? 1、对比一下cache目录，如果已经引入过，则不需要进行再次引入，直接将存好的module的exports返回即可
+// ? 2、如果没有在cache目录中，则需要新生成一个module，此时需要做两步，一步是对require文件的内容进行一个包括，然后做一个立即执行的操作，第二步是对这个module进行缓存
+// ? 2-* 我们可以看到在文件中，我们可以直接使用exports关键字，就是因为require在包裹的时候其实是给传入了module、module.exports等参数的
