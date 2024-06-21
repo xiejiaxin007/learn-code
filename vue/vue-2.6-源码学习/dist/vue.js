@@ -858,8 +858,10 @@
    */
 
   var arrayProto = Array.prototype;
+  // ! 数组的继承，能够新增一种对象类型
   var arrayMethods = Object.create(arrayProto);
 
+  // ! 这个地方就是说明为什么数组只有一部分方法是可以进行视图更新的，只有重新的方法才可以进行双向绑定，其他数组方法没有重写，是因为如果都重写了，性能会很差
   var methodsToPatch = [
     'push',
     'pop',
@@ -892,6 +894,7 @@
           inserted = args.slice(2);
           break
       }
+      // ? 表示如果是新增，则需要给新增的也进行数据劫持
       if (inserted) { ob.observeArray(inserted); }
       // notify change
       ob.dep.notify();
@@ -928,11 +931,13 @@
     if (Array.isArray(value)) {
       // ! 数组处理方式
       if (hasProto) {
-        // ! '__proto__' in {}
+        // ! '__proto__' in {}，重新指定原型链
+        // ? 对数组的原型链上面的方法进行重写，主要是为了对那几个方法进行视图通知（数组类似删除的方法），还有新增劫持（数组类似新增的方法）
         protoAugment(value, arrayMethods);
       } else {
         copyAugment(value, arrayMethods, arrayKeys);
       }
+      // ! 进行数组对象的数据劫持绑定
       this.observeArray(value);
     } else {
       // ! 对象处理方式
