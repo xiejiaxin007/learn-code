@@ -70,18 +70,18 @@ var reverseKGroup = function(head, k) {
 // console.log(reverseKGroup(val, key));
 
 // 反转整个链表
-// var reverse = function(head) {
-//   if (head == null) {
-//     return null
-//   }
-//   let pre = null, cur = head, nxt = head
-//   while(cur){
-//     nxt = cur.next
-//     cur.next = pre
-//     pre = cur
-//     cur = nxt
-//   }
-//   return pre
-// }
-// console.log(reverse(val))
+var reverse = function(head) {
+  if (head == null) {
+    return null
+  }
+  let pre = null, cur = head, nxt = head
+  while(cur){
+    nxt = cur.next
+    cur.next = pre
+    pre = cur
+    cur = nxt
+  }
+  return pre
+}
+console.log(reverse(val))
 

@@ -4052,6 +4052,7 @@
       vm.$options.render = createEmptyVNode;
       {
         /* istanbul ignore if */
+        // TODO 为啥有el也要抛出警告？？
         if ((vm.$options.template && vm.$options.template.charAt(0) !== '#') ||
           vm.$options.el || el) {
           warn(
@@ -4068,6 +4069,7 @@
         }
       }
     }
+    // ! 调用beforeMount方法，调用之前，也就是created之后，查找一下是否有el绑定的dom节点，如果有，则找一下是否有template，如果没有就拿el的dom中间的html，如果找到了，才进行下一步的渲染，然后出发这个生命周期
     callHook(vm, 'beforeMount');
 
     var updateComponent;
@@ -4111,6 +4113,7 @@
     // mounted is called for render-created child components in its inserted hook
     if (vm.$vnode == null) {
       vm._isMounted = true;
+      // ! 调用mounted方法
       callHook(vm, 'mounted');
     }
     return vm
@@ -4764,7 +4767,7 @@
         );
       } else if (!isReserved(key)) {
         // ! 这个地方要判断属性值key是否是$或者_开头的
-        // TODO-回头再来看
+        // ! 将_data的双向绑定数据代理到vm上面，这样我们就可以通过this.xxx来访问数据，而不是通过this._data.xxx
         proxy(vm, "_data", key);
       }
     }
@@ -5057,13 +5060,13 @@
       initEvents(vm);
       // ? 初始化render函数
       initRender(vm);
-      // ? 调用声明周期beforeCreate
+      // ! 调用声明周期beforeCreate
       callHook(vm, 'beforeCreate');
       initInjections(vm); // resolve injections before data/props
       // ? 实例化状态--data/watch/props/methods
       initState(vm);
       initProvide(vm); // resolve provide after data/props
-      // ? 调用生命周期函数created
+      // ! 调用生命周期函数created
       callHook(vm, 'created');
 
       /* istanbul ignore if */
@@ -9137,6 +9140,7 @@
     el,
     hydrating
   ) {
+    // ! inBrowser判断是否有window，其实就是在判断是否是浏览器环境，而不是node环境啥的
     el = el && inBrowser ? query(el) : undefined;
     return mountComponent(this, el, hydrating)
   };
