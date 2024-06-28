@@ -3581,6 +3581,7 @@
         // separately from one another. Nested component's render fns are called
         // when parent component is patched.
         currentRenderingInstance = vm;
+        // ! 因为render函数已经组装成功了，所以_render主要是做一个执行，同时将作用域进行修改即可
         vnode = render.call(vm._renderProxy, vm.$createElement);
       } catch (e) {
         handleError(e, vm, "render");
@@ -4093,6 +4094,7 @@
       };
     } else {
       updateComponent = function () {
+        // ! 主要执行这个方法：_render是将render函数转换为vnode，然后_update函数将vnode转换为真是dom
         vm._update(vm._render(), hydrating);
       };
     }
