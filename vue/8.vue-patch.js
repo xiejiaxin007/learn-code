@@ -2,9 +2,10 @@
  * @author: xiejiaxin
  * @Date: 2021-10-18 22:07:00
  * @LastEditors: xiejiaxin
- * @LastEditTime: 2021-10-18 22:31:19
+ * @LastEditTime: 2024-07-19 14:53:12
  * @description: file content
  */
+// ! https://download.csdn.net/blog/column/12444886/134437782
 // patch函数：对比节点，vnode（新节点）、oldVnode（老节点）
 // vnode有text（表示vnode没有children）
 

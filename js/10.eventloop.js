@@ -1,8 +1,8 @@
 /*
  * @author: xiejiaxin
  * @Date: 2021-10-14 22:05:14
- * @LastEditors: Please set LastEditors
- * @LastEditTime: 2024-06-06 11:22:56
+ * @LastEditors: xiejiaxin
+ * @LastEditTime: 2024-08-05 16:29:11
  * @description: file content
  */
 // js是非阻塞性的一种语言，只能进行单线程运行，原因：因为js的运行环境主要是浏览器，而浏览器有很多IO操作，如果是多线程，那同时对一个dom进行新增又删除，那肯定就乱套了
@@ -34,20 +34,32 @@ function fn(x) {
         }, 1000);
     })
 }
+// ! foreach想要一秒一次，可以使用这个方法，将index传入来修改延迟时间
+// function fn(x, i) {
+//     return new Promise((resolve) => {
+//         setTimeout(() => {
+//             resolve(x * x);
+//         }, 1000 * i);
+//     })
+// }
 
 // 目前原因不知道，只是知道foreach是不可以被中断的，所以是一秒后打印1，4，9，换成for就可以一秒打印一次了
-function test() {
-    arr.forEach(async (val) => {
-        const newArr = await fn(val);
-        console.log(newArr);
-    });
+// function test(){
+//     arr.forEach(async (val, index) => {
+//         const newArr = await fn(val, index);
+//         console.log(newArr);
+//     });
+// }
+// ! 现在知道原因了，因为foreach是一个不可以打断的循环，mdn上专门强调了不用在foreach里头做异步操作，而for、for of是可以循环异步操作的，因为for和for of在执行一个迭代器类似的东西，可以进行等待
+var test = async() => {
+    for (let i = 0; i < arr.length; i++) {
+        const newArr = await fn(arr[i]);
+        console.log(newArr)
+    }
 }
 // test();
 
-// for (let i = 0; i < arr.length; i++) {
-//     const newArr = await fn(arr[i]);
-//     console.log(newArr)
-// }
+
 
 // TODO
 const first = () => (new Promise((resolve, reject) => {

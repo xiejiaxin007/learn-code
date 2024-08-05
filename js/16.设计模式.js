@@ -2,7 +2,7 @@
  * @author: xiejiaxin
  * @Date: 2021-10-15 16:45:57
  * @LastEditors: xiejiaxin
- * @LastEditTime: 2021-10-18 10:44:27
+ * @LastEditTime: 2024-08-05 15:24:57
  * @description: file content
  */
 // 工厂模式：将实例化动作放到入口函数内部，可以隐藏内部实现，比如vue中的虚拟dom，就是根据不同的参数返回不同的dom结构的

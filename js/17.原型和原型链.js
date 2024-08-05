@@ -2,7 +2,7 @@
  * @author: xiejiaxin
  * @Date: 2021-10-23 19:24:53
  * @LastEditors: xiejiaxin
- * @LastEditTime: 2021-11-01 15:31:45
+ * @LastEditTime: 2024-08-05 15:02:42
  * @description: file content
  */
 
@@ -76,9 +76,10 @@ child2.a = 12;
 parent.show(); // 1,[1,2,1],5
 child1.show(); // 11,[1,2,1],5
 child2.show(); // 12,[1,2,1],5
-child1.change();
+child1.change(); // 4,[1,2,1,11],demo:4
 //! child1和child2相互影响，因为Child构造函数是继承自Parent，也就是child1和child2的__proto__实际是指向Parent的实例（同一个），导致引用是一样的！！！
-child2.change();
+// ? a不是引用，b和c是引用
+child2.change();// 5,[1,2,1,11,12],demo:5
 parent.show(); // 1,[1,2,1],5
 child1.show(); // 5,[1,2,1,11,12],5
 child2.show(); // 6,[1,2,1,22,12],5
